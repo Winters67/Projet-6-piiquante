@@ -1,8 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const sauces = require('./models/Sauce');
 const userRoutes = require('./routes/user');
+const sauceRoutes = require('./routes/sauces');
 const app = express();
+
 
 
 
@@ -23,43 +24,14 @@ mongoose.connect('mongodb+srv://Winters:E290380l@cluster0.9vp7c.mongodb.net/myFi
     next();
   });
 
-  
-
- app.post('/api/sauces', (req, res, next) => {
-   delete req.body._id;
-   const Sauces = new sauces({
-     ...req.body
-    });    
-  Sauces.save()
-    .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
-    .catch(error => res.status(400).json({ error }));
- });
 
 
-
-app.get('/api/sauces', (req, res, next) => {
-  const sauces = [
-    {
-      userId: '',
-      name: 'Ketchup',
-      manufacturer:'Amora' ,
-      description: 'condiment à base de tomate',
-      mainPepper: 'tomate',
-      imageUrl: 'https://www.action.com/globalassets/cmsarticleimages/88/92/2552952_8715700110202-111_01.png',
-      heat: '2',
-      likes: '10',
-      dislikes: '2',
-      
-    }
-  ]
-  res.status(200).json(sauces);
-});
-
-
+ 
 
 
 
 app.use ('/api/auth' , userRoutes);
+app.use ('/api/sauces', sauceRoutes);
 
 
 module.exports = app;
