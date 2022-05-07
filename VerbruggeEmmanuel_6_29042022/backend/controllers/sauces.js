@@ -3,14 +3,17 @@ const Sauce = require('../models/Sauce')
 
 
 exports.createSauce =  (req, res, next) => {
-    delete req.body._id;
+    const sauceObject = JSON.parse(req.body.Sauces);
+    delete sauceObject._id;
     const Sauces = new sauces({
-      ...req.body
+      ...sauceObject,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
      });    
    Sauces.save()
      .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
      .catch(error => res.status(400).json({ error }));
   };
+
 
 exports.modifySauce = (req, res, next) => {
     Thing.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })

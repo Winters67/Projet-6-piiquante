@@ -1,8 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const app = express();
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauces');
-const app = express();
+const path = require('path');
+
 
 
 
@@ -25,11 +27,7 @@ mongoose.connect('mongodb+srv://Winters:E290380l@cluster0.9vp7c.mongodb.net/myFi
   });
 
 
-
- 
-
-
-
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use ('/api/auth' , userRoutes);
 app.use ('/api/sauces', sauceRoutes);
 
