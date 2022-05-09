@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const userRoutes = require('./routes/user');
-const sauceRoutes = require('./routes/sauces');
+const sauceRoutes = require('./routes/sauce');
 const path = require('path');
 
 

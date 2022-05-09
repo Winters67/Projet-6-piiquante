@@ -3,38 +3,38 @@ const Sauce = require('../models/Sauce')
 
 
 exports.createSauce =  (req, res, next) => {
-    const sauceObject = JSON.parse(req.body.Sauces);
+    const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
-    const Sauces = new sauces({
+    const sauce = new Sauce({
       ...sauceObject,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
      });    
-   Sauces.save()
+   sauce.save()
      .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
      .catch(error => res.status(400).json({ error }));
   };
 
 
 exports.modifySauce = (req, res, next) => {
-    Thing.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+    Sauce.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
      .then(() => res.status(200).json({ message: 'Objet modifié !'}))
      .catch(error => res.status(400).json({ error }));
  };
 
  exports.deleteSauce = (req, res, next) => {
-  Thing.deleteOne({ _id: req.params.id })
+  Sauce.deleteOne({ _id: req.params.id })
     .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
     .catch(error => res.status(400).json({ error }));
 };
 
 exports.getOneSauce = (req, res, next) => {
-  sauces.findOne({ _id: req.params.id})
-    .then(things => res.status(200).json(things))
+  Sauce.findOne({ _id: req.params.id})
+    .then((sauce) => res.status(200).json(sauce))
     .catch(error => res.status(400).json({ error }));
  };
 
  exports.getAllSauce = (req, res, next) => {
-  sauces.find()
-    .then(things => res.status(200).json(things))
+  Sauce.find()
+    .then((sauce) => res.status(200).json(sauce))
     .catch(error => res.status(400).json({ error }));
  };

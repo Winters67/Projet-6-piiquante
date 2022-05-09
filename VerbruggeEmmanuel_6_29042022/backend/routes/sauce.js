@@ -3,7 +3,7 @@ const router = express.Router();
 
 const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config');
-const sauceCtrl = require('../controllers/sauces');
+const sauceCtrl = require('../controllers/sauce');
 
 
 
@@ -13,4 +13,4 @@ router.delete('/:id', auth, sauceCtrl.deleteSauce);
 router.get('/:id', auth, sauceCtrl.getOneSauce);
 router.get('/', auth, sauceCtrl.getAllSauce);
 
-  module.exports = router;
+module.exports = router;
