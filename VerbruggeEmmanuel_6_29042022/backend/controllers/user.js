@@ -5,13 +5,17 @@ const jwt = require('jsonwebtoken');
 
 
 
+
+
+
+ 
 // enregistrement de nouveaux utilisateurs
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10) // crypte le mot de passe 10 fois
       .then(hash => {
         const user = new User({
           email: req.body.email,
-          password: hash  
+          password: hash
         });
         user.save()
           .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
