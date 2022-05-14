@@ -1,5 +1,7 @@
 const Sauce = require('../models/Sauce')
+const fs = require('fs'); // donne accès aux fonctions qui nous permettent de modifier le système de fichiers
 
+//------------------ Création d'une sauce -----------------------//
 
 exports.createSauce =  (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce);
@@ -13,24 +15,41 @@ exports.createSauce =  (req, res, next) => {
      .catch(error => res.status(400).json({ error }));
   };
 
+//----------------- Modification de la sauce ----------------------//
 
 exports.modifySauce = (req, res, next) => {
-    Sauce.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
-     .then(() => res.status(200).json({ message: 'Objet modifié !'}))
-     .catch(error => res.status(400).json({ error }));
- };
-
- exports.deleteSauce = (req, res, next) => {
-  Sauce.deleteOne({ _id: req.params.id })
-    .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
-    .catch(error => res.status(400).json({ error }));
+  Sauce.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+  .then(() => res.status(200).json({ message: 'Objet modifié !'}))
+  .catch(error => res.status(400).json({ error }));
+  
 };
+
+//----------------- Suppression  de la sauce ----------------------//
+
+exports.deleteSauce = (req, res, next) => {
+  Sauce.findOne({ _id: req.params.id})
+  .then(sauce => {
+    const filename = sauce.imageUrl.split('/images/')[1];
+    fs.unlink(`images/${filename}`, () => {
+      Sauce.deleteOne({ _id: req.params.id })
+        .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
+        .catch(error => res.status(400).json({ error }));
+    });
+  })
+  .catch(error => res.status(500).json({ error }));
+};
+
+
+//----------------- Renvoie une  sauce ---------------------------//
 
 exports.getOneSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id})
-    .then((sauce) => res.status(200).json(sauce))
-    .catch(error => res.status(400).json({ error }));
- };
+  .then((sauce) => res.status(200).json(sauce))
+  .catch(error => res.status(400).json({ error }));
+};
+
+//----------------- Renvoie un tableau des  sauces-----------------//
+
 
  exports.getAllSauce = (req, res, next) => {
   Sauce.find()
@@ -38,7 +57,12 @@ exports.getOneSauce = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
  };
 
- ///post/:id/like
+ 
+ 
+ 
+// ----------------------- LikeDislike d'une sauce ----------------------- //
+
+
 exports.addLikeToSauce = (req, res, next) => {
 
   
