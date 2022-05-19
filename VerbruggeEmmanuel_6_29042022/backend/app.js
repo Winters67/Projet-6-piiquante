@@ -3,7 +3,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const path = require("path");
-const helmet = require("helmet");
 
 // ----------importation des routes-------------------
 const userRoutes = require("./routes/user");
@@ -39,8 +38,6 @@ app.use((req, res, next) => {
   );
   next();
 });
-// --------- respecter plus de normes de sécurité---------------
-app.use(helmet());
 
 // ------Multer----------------------------------------------------
 app.use("/images", express.static(path.join(__dirname, "images")));
