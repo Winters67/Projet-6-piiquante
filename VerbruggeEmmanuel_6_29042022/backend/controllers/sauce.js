@@ -1,5 +1,6 @@
 const Sauce = require('../models/Sauce')
-const fs = require('fs'); // donne accès aux fonctions qui nous permettent de modifier le système de fichiers
+// donne accès aux fonctions qui nous permettent de modifier le système de fichiers
+const fs = require('fs');
 
 //------------------ Création d'une sauce -----------------------//
 

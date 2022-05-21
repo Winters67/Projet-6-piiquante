@@ -1,15 +1,8 @@
 const bcrypt = require('bcrypt'); // hachage du mot de passe  
 const jwt = require('jsonwebtoken');
-
- const User = require('../models/User');
-
-
-
-
-
-
+const User = require('../models/User');
  
-// enregistrement de nouveaux utilisateurs
+//----------- enregistrement de nouveaux utilisateurs-----------------
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10) // crypte le mot de passe 10 fois
       .then(hash => {
@@ -24,8 +17,7 @@ exports.signup = (req, res, next) => {
       .catch(error => res.status(500).json({ error }));
   };
 
-
-// connecter les utilisateurs existant
+//------------ connecter les utilisateurs existant----------------------
 exports.login = (req, res, next) => {
   User.findOne({ email: req.body.email })
     .then(user => {

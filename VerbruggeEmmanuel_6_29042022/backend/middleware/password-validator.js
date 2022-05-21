@@ -1,17 +1,19 @@
 const passwordValidator = require('password-validator');
 
+// Créer un schéma 
 const passwordSchema = new passwordValidator();
 
-// prettier-ignore
+// Ajoutez des propriétés au 
 passwordSchema
-    .is().min(4)                                    // Minimum length 8
-    .is().max(50)                                   // Maximum length 100
-    .has().uppercase()                              // Must have uppercase letters
-    .has().lowercase()                              // Must have lowercase letters
-    .has().digits(2)                                // Must have at least 2 digits
-    .has().not().spaces()                           // Should not have spaces
-    .is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
-// prettier-ignore
+    .is().min(4)                                     // Longueur minimale 8 
+    .is().max(50)                                    // Longueur maximale 100 
+    .has().uppercase()                              // Doit contenir des lettres majuscules
+    .has().lowercase()                              // Doit contenir des lettres minuscules
+    .has().digits(2)                                // Doit avoir au moins 2 chiffres
+    .has().not().spaces()                           // Ne doit pas avoir d'espaces 
+    .is().not().oneOf(['Passw0rd', 'Password123']); // Liste noire ces valeurs
+
+
 
 // Comparaison avec le password envoyé
 module.exports = (req, res, next) => {
