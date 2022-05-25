@@ -70,17 +70,17 @@ exports.addLikeToSauce = (req, res, next) => {
   
   Sauce.findById(req.params.id).then(sauce => {
       switch (req.body.like) {
-          case 1:
+          case 1:// si un utilisateur like une sauce
               sauce.usersLiked.push(req.body.userId);
-              
-              sauce.likes += 1;
+              // màj sauce: on incrémente de 1 le nombre de likes et on ajoute l'userId au tableau usersLiked
+              sauce.likes += 1;            
               break;
-          case -1:
+          case -1: //si un utilisateur dislike une sauce
               sauce.usersDisliked.push(req.body.userId);
             
               sauce.dislikes += 1;
               break;
-          case 0:
+          case 0:  //si un utilisateur annule son like ou son dislike
               let index = sauce.usersLiked.indexOf(req.body.userId);
               if (index !== -1) {
                   sauce.usersLiked.splice(index, 1);
